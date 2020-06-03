@@ -1,14 +1,14 @@
 <template lang="pug">
 v-row(justify="center")
-  v-card(outlined max-width="400")
+  v-card( max-width="380" outlined)
     v-list(
       v-if="giftList"
       threeLine
       )
       template(v-for="(gift,index) in giftList")
+        v-row.mt-3(justify="center")
+          v-img(:src="getImgLink(gift)" max-width="100" max-height="100")
         v-list-item.my-1(:key="index")
-          v-list-item-avatar
-            v-img(:src="getImgLink(gift)")
           v-list-item-content
             v-list-item-title {{ gift.name }}
             v-list-item-subtitle.my-1(v-if="gift.priority") Prioridade alta
@@ -19,6 +19,7 @@ v-row(justify="center")
             v-if="gift.avaiable"
             @click="setAsBought(gift)"
             :loading="loading"
+            outlined
             )
             | Marcar como comprado
           v-btn(

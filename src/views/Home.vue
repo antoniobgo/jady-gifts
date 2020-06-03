@@ -19,7 +19,6 @@ v-row(justify="center")
             v-if="gift.avaiable"
             @click="setAsBought(gift)"
             :loading="loading"
-            outlined
             )
             | Marcar como comprado
           v-btn(
@@ -28,6 +27,13 @@ v-row(justify="center")
             :loading="loading"
             )
             | Marcar como disponível
+          v-dialog(v-model="dialog" max-width="290")
+            v-card
+              v-card-title Desculpe, ocorreu um erro
+              v-divider
+              v-card-actions
+                v-spacer
+                v-btn(@click="dialog=false") Ok
 
         v-divider
 </template>
@@ -41,6 +47,7 @@ export default {
     return {
       giftList: undefined,
       loading: false,
+      dialog: false,
     };
   },
   mounted() {
@@ -63,7 +70,11 @@ export default {
           "https://5ed52f3e8769250016e6338a.mockapi.io/presentes/" + gift.id,
           gift
         )
-        .then(() => {
+        .then((response) => {
+          if (response.status != 200) {
+            gift.avaiable = true;
+            this.dialog = true;
+          }
           this.loading = false;
         });
     },
@@ -75,7 +86,11 @@ export default {
           "https://5ed52f3e8769250016e6338a.mockapi.io/presentes/" + gift.id,
           gift
         )
-        .then(() => {
+        .then((response) => {
+          if (response.status != 200) {
+            gift.avaiable = false;
+            this.dialog = true;
+          }
           this.loading = false;
         });
     },

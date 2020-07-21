@@ -1,5 +1,11 @@
 # jady-gifts
 
+## Deployed project URL
+
+```
+https://jadynha-ae7a3.web.app/
+```
+
 ## Project setup
 
 ```
